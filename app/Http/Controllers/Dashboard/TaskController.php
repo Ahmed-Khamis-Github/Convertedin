@@ -8,6 +8,8 @@ use App\Models\Admin;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Statistics;
+
 
 class TaskController extends Controller
 {
@@ -43,8 +45,16 @@ class TaskController extends Controller
 
         Task::create($validatedData);
 
-       
 
+        // Update or create statistics for the assigned user
+        $assignedUserId = $validatedData['assigned_to_id'];
+
+        $currentTaskCount = Statistics::where('user_id', $assignedUserId)->value('task_count');
+
+        Statistics::updateOrCreate(
+            ['user_id' => $assignedUserId],
+            ['task_count' => $currentTaskCount + 1]
+        );
 
         return redirect()->route('dashboard.tasks.index')->with('success', 'Task Created Successfully');
     }
@@ -84,7 +94,15 @@ class TaskController extends Controller
 
         $task->update($validatedData);
 
-      
+        $assignedUserId = $validatedData['assigned_to_id'];
+
+        $currentTaskCount = Statistics::where('user_id', $assignedUserId)->value('task_count');
+
+        Statistics::updateOrCreate(
+            ['user_id' => $assignedUserId],
+            ['task_count' => $currentTaskCount + 1]
+        );
+
 
         return redirect()->route('dashboard.tasks.index')->with('success', 'Task Updated Successfully');
     }
