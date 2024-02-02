@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\Dashboard\CategoryController;
-use App\Http\Controllers\Dashboard\ProjectController;
-use App\Http\Controllers\Dashboard\UserController;
+ 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Dashboard\TaskController;
 
 
 Route::group([
@@ -15,6 +14,7 @@ Route::group([
 ],function(){
 
      
+    Route::resource('tasks', TaskController::class);
 
 
 }) ;
