@@ -18,7 +18,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::with(['admin', 'assignedTo'])->paginate(10);
+        $tasks = Task::with(['admin', 'assignedTo'])
+            ->orderByDesc('created_at')  
+            ->paginate(10);
 
         return view('dashboard.tasks.index', compact('tasks'));
     }
@@ -96,12 +98,17 @@ class TaskController extends Controller
 
         $assignedUserId = $validatedData['assigned_to_id'];
 
-        $currentTaskCount = Statistics::where('user_id', $assignedUserId)->value('task_count');
+        // Check if the assigned user ID has changed before updating the task
+        if ($task->assigned_to_id != $assignedUserId) {
+            $task->update($validatedData);
 
-        Statistics::updateOrCreate(
-            ['user_id' => $assignedUserId],
-            ['task_count' => $currentTaskCount + 1]
-        );
+            $currentTaskCount = Statistics::where('user_id', $assignedUserId)->value('task_count');
+
+            Statistics::updateOrCreate(
+                ['user_id' => $assignedUserId],
+                ['task_count' => $currentTaskCount + 1]
+            );
+        }
 
 
         return redirect()->route('dashboard.tasks.index')->with('success', 'Task Updated Successfully');

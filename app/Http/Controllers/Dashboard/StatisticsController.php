@@ -6,14 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Models\Statistics;
+use App\Models\Task;
 use App\Models\User;
+
 
 class StatisticsController extends Controller
 {
     public function index()
     {
         // Fetch total tasks, admins, and users
-        $totalTasks = Statistics::sum('task_count');
+        $totalTasks = Task::count();
         $totalAdmins = Admin::count();
         $totalUsers = User::count();
 

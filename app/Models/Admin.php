@@ -26,4 +26,14 @@ class Admin extends User
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+        //relations
+
+    // Each admin may have many tasks
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'admin_id');
+    }
 }

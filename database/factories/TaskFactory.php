@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,7 +22,7 @@ class TaskFactory extends Factory
             'admin_id' => Admin::factory(),
             'title' => $this->faker->sentence,
             'description' => $this->faker->paragraph,
-            'assigned_to_id' => \App\Models\User::factory(),
+            'assigned_to_id' => User::factory(),
             'created_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
             'updated_at' => $this->faker->dateTimeBetween('-1 year', 'now'),
         ];

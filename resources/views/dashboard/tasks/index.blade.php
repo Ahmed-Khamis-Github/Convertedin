@@ -33,16 +33,16 @@ Tasks
           <th style="width: 5%">
             #
           </th>
-          <th style="width:10%">
+          <th style="width:20%">
             Title
           </th>
-          <th style="width: 20%">
+          <th style="width: 15%">
             Description
           </th>
           <th style="width: 20%">
             Assigned Name
           </th>
-          <th style="width: 20%">
+          <th style="width: 15%">
             Admin Name
           </th>
           
@@ -59,7 +59,7 @@ Tasks
       @foreach ($tasks as $task)
           <tr>
             <td>
-              {{ $loop->iteration }}
+              {{ ($tasks->currentPage() - 1) * $tasks->perPage() + $loop->iteration }}
             </td>
               <td><a href={{ route('dashboard.tasks.show',$task->id) }} >{{  $task->title }}</a></td>
 

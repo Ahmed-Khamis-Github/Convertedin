@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use Database\Factories\AdminFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,7 +22,8 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call([
             AdminsTableSeeder::class ,
-            UsersTableSeeder::class
-        ]) ;
+            UsersTableSeeder::class , 
+            // TasksTableSeeder::class
+         ]) ;
     }
 }
