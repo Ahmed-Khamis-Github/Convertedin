@@ -20,5 +20,8 @@ class AdminsTableSeeder extends Seeder
             'password'=>Hash::make(12345678)
 
         ]) ;
+
+        Admin::factory()->count(100)->create();
+
     }
 }
